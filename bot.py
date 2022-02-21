@@ -1,7 +1,7 @@
+from config import TOKEN
 import discord
 from discord.ext import commands
-from commands_folder.dice_commands import DiceComm
-from config import TOKEN
+import os
 
 intents = discord.Intents.default()
 intents.reactions = True
@@ -9,10 +9,16 @@ intents.messages = True
 
 bot = commands.Bot(command_prefix='$', intents=intents)
 
-bot.add_cog(DiceComm(bot))
+list_of_commands = []
+for roots, dir, files in os.walk("cogs"):
+    for arquivo in files:
+        if arquivo.endswith(".py"):
+            list_of_commands.append(os.path.join(roots, arquivo))
 
-@bot.event
-async def on_ready():
-    print('Logged in as {0.user}'.format(bot))
+for n in range(len(list_of_commands)):
+    list_of_commands[n] = list_of_commands[n].replace("/", ".")
+
+for f in list_of_commands:
+    bot.load_extension(f[:-3])
 
 bot.run(TOKEN)
