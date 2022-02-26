@@ -9,13 +9,13 @@ class DiceCommands(commands.Cog):
 
     @commands.command()
     async def roll(self, ctx, sides):
-        '''Rolls a custom die.'''
+        """Rolls a custom die."""
         try:
             dice = Dice(int(sides))
         except (DiceException, ValueError):
-            await ctx.send('Valor inválido.')
+            await ctx.send("Valor inválido.")
             return
-        await ctx.send('Resultado: {result}'.format(result=dice.roll()))
+        await ctx.send("Resultado: {result}".format(result=dice.roll()))
 
     #@commands.command()
     #async def roll_many(self, ctx, ):

@@ -3,11 +3,14 @@ async-timeout==3.0.1
 attrs==21.4.0
 chardet==3.0.4
 discord.py==1.7.3
+greenlet==1.1.2
 idna==3.3
 idna-ssl==1.1.0
 mariadb==1.0.10
 multidict==4.7.6
+PyMySQL==1.0.2
 python-dotenv==0.19.2
-rpgtk==0.0.2.4a0
+rpgtk==0.1.5
+SQLAlchemy==1.4.31
 typing-extensions==3.10.0.2
 yarl==1.5.1
