@@ -7,12 +7,13 @@ from sqlalchemy.ext.declarative import declarative_base
 from constants import COIN, BAG
 from database import get_session
 
-base = declarative_base()
+
+Base = declarative_base()
 
 session = get_session()
 
 
-class PlayerModel(base):
+class PlayerModel(Base):
     __tablename__ = 'players'
     user_id = Column(BigInteger, primary_key=True, nullable=False)
     currency = Column(Integer, default=0)
