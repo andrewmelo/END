@@ -39,6 +39,7 @@ class AccountModel(Base):
                 return None
             else:
                 embed = Embed(color=0x128a33)
+                embed.set_author(name="Bank Account", icon_url="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/313/money-bag_1f4b0.png")
                 embed.set_footer(text=nick, icon_url=avatar_url)
                 embed.add_field(name="Checking account", value=f"{self.account.checking} {COIN}", inline=True)
                 embed.add_field(name="Savings account", value=f"{self.account.savings} {COIN}", inline=True)
