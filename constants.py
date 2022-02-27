@@ -1,3 +1,3 @@
-COIN = "Coin"
+COIN = "Coins"
 BAG = "Bag"
 PREFIX = "$"

@@ -43,7 +43,7 @@ class PlayerModel(Base):
             print(e)
 
     def show(self, nick, avatar_url):
-        embed = Embed(colour=0x7833bd)
+        embed = Embed(color=0x7833bd)
         embed.set_author(name=nick, icon_url=avatar_url)
         embed.add_field(name=COIN, value=self.currency, inline=True)
         embed.add_field(name=BAG, value="Empty", inline=True)
