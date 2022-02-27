@@ -1,6 +1,7 @@
 from discord import Embed
 from discord.ext import commands
 
+from constants import PREFIX
 from models.player_model import PlayerModel
 
 class MainCog(commands.Cog):
@@ -33,6 +34,11 @@ class MainCog(commands.Cog):
         if player == None:
             player = PlayerModel()
             player.create(ctx.author.id)
+            player.currency = 10
+            await ctx.send("You got 10 coins for creating your profile! "
+                            "Don't spent them all in one place. You should "
+                            f"try {PREFIX}bankaccount to check what you can "
+                            "do with all that money.")
         embed = player.show(
             nick=ctx.author.nick,
             avatar_url=ctx.author.avatar_url
