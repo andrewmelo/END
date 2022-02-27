@@ -130,3 +130,4 @@ dmypy.json
 
 test.py
 backup-file.sql
+commit.txt

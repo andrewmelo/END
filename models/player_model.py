@@ -1,6 +1,6 @@
 from datetime import datetime
 from discord import Embed
-from sqlalchemy import Integer, String, DateTime, Column
+from sqlalchemy import Integer, BigInteger, DateTime, Column
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -14,7 +14,7 @@ session = get_session()
 
 class PlayerModel(base):
     __tablename__ = 'players'
-    user_id = Column(String(length=30), primary_key=True, nullable=False)
+    user_id = Column(BigInteger, primary_key=True, nullable=False)
     currency = Column(Integer, default=0)
     created_at = Column(DateTime, default=datetime.utcnow())
 

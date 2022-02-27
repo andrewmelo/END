@@ -33,12 +33,11 @@ class MainCog(commands.Cog):
         if player == None:
             player = PlayerModel()
             player.create(ctx.author.id)
-        elif str(ctx.author.id) == str(player.user_id):
-            embed = player.show(
-                nick=ctx.author.nick,
-                avatar_url=ctx.author.avatar_url
-            )
-            await ctx.send(embed=embed)
+        embed = player.show(
+            nick=ctx.author.nick,
+            avatar_url=ctx.author.avatar_url
+        )
+        await ctx.send(embed=embed)
 
 
 def setup(bot):

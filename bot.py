@@ -1,14 +1,16 @@
-from config import TOKEN
 import discord
-from discord.ext import commands
 import os
+from config import TOKEN
+from discord.ext import commands
+
+from constants import PREFIX
 
 intents = discord.Intents.default()
 intents.members = True
 intents.reactions = True
 intents.messages = True
 
-bot = commands.Bot(command_prefix="$", intents=intents)
+bot = commands.Bot(command_prefix=PREFIX, intents=intents)
 
 list_of_commands = []
 for roots, dir, files in os.walk("cogs"):
