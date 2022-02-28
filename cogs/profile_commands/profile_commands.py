@@ -5,6 +5,7 @@ from constants import PREFIX
 from models.player_model import PlayerModel
 from models.account_model import AccountModel
 from database.session_handler import save_object
+from helpers.player import get_name
 
 class MainCog(commands.Cog):
     def __init__(self, bot):
@@ -42,7 +43,7 @@ class MainCog(commands.Cog):
                             f"try {PREFIX}bankaccount to check what you can "
                             "do with all that money.")
         embed = player.show(
-            nick=ctx.author.nick,
+            nick=get_name(ctx),
             avatar_url=ctx.author.avatar_url
         )
         await ctx.send(embed=embed)
