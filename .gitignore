@@ -129,5 +129,3 @@ dmypy.json
 .pyre/
 
 test.py
-backup-file.sql
-commit.txt

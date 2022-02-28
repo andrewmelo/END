@@ -3,6 +3,8 @@ from discord.ext import commands
 
 from constants import PREFIX
 from models.player_model import PlayerModel
+from models.account_model import AccountModel
+from database.session_handler import save_object
 
 class MainCog(commands.Cog):
     def __init__(self, bot):
@@ -29,12 +31,12 @@ class MainCog(commands.Cog):
     @commands.command(aliases=["p"])
     async def profile(self, ctx):
         """Setup or show player profile"""
-        player = PlayerModel()
-        player = player.get_info(ctx.author.id)
-        if player == None:
-            player = PlayerModel()
-            player.create(ctx.author.id)
-            player.currency = 10
+        player = PlayerModel.get_player(ctx.author.id)
+        if not player:
+            player = PlayerModel(user_id=ctx.author.id)
+            save_object(player)
+            account = AccountModel(user_id=player.user_id)
+            save_object(account)
             await ctx.send("You got 10 coins for creating your profile! "
                             "Don't spent them all in one place. You should "
                             f"try {PREFIX}bankaccount to check what you can "

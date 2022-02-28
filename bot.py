@@ -10,7 +10,7 @@ intents.members = True
 intents.reactions = True
 intents.messages = True
 
-bot = commands.Bot(command_prefix=PREFIX, intents=intents)
+bot = commands.Bot(command_prefix=PREFIX, intents=intents, help_command=None)
 
 list_of_commands = []
 for roots, dir, files in os.walk("cogs"):

@@ -1,7 +1,7 @@
 from discord.ext import commands
-from discord import utils
 
 from models.account_model import AccountModel
+from database.session_handler import get_object
 
 class MainCog(commands.Cog):
     def __init__(self, bot):
@@ -9,13 +9,17 @@ class MainCog(commands.Cog):
     
     @commands.command(aliases=["ba"])
     async def bankaccount(self, ctx):
-        bank_statement = AccountModel()        
-        embed = bank_statement.get_info(
-            ctx.author.id,
-            ctx.author.nick,
-            ctx.author.avatar_url,
-        )
-        await ctx.send(embed=embed)
+        account = get_object(AccountModel, user_id=ctx.author.id)
+        if account:
+            embed = account.get_info_embed(
+                ctx.author.nick,
+                ctx.author.avatar_url,
+            )
+            await ctx.send(embed=embed)
+
+    @commands.command(aliases=["dr"])
+    async def dailyreward(self, ctx):
+        pass
 
 def setup(bot):
     bot.add_cog(MainCog(bot))

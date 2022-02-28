@@ -1,14 +1,16 @@
 from sqlalchemy import create_engine
-from sqlalchemy import orm
+from sqlalchemy.orm.session import Session
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
 from config import ENGINE_URL
 
 
-engine = create_engine(ENGINE_URL, echo=True, future=True)
-
+Base = declarative_base()
 
 def get_session():
-    session = orm.sessionmaker()
-    session.configure(bind=engine)
-    session = session()
-    return session
+    session = sessionmaker(my_create_engine(), expire_on_commit=False)
+    return session()
+
+def my_create_engine():
+    return create_engine(ENGINE_URL)
