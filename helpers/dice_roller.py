@@ -18,6 +18,7 @@ class Bet:
                 self.count += 1
 
         if self.count == 0:
+            self.reward = 0
             return
             
         self.reward = money + money * self.count

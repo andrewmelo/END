@@ -5,12 +5,13 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from constants import COIN, DAILY_CLAIM
 from database import Base
+from database.session_handler import get_object
 
 
 class AccountModel(Base):
     __tablename__ = "accounts"
     user_id = Column(BigInteger, primary_key=True, nullable=False)
-    checking = Column(Integer, default=0)
+    checking = Column(Integer, default=10)
     savings = Column(Integer, default=0)
     stashed = Column(Integer, default=0)
     is_open = Column(Boolean, default=True)
@@ -49,3 +50,10 @@ class AccountModel(Base):
                 inline=False
             )
         return embed
+    
+    @classmethod
+    def get_account(cls, user_id):
+        try:
+            return get_object(cls, user_id=user_id)
+        except SQLAlchemyError as e:
+            print(e)
