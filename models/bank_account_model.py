@@ -8,8 +8,8 @@ from database import Base
 from database.session_handler import get_object
 
 
-class AccountModel(Base):
-    __tablename__ = "accounts"
+class BankAccountModel(Base):
+    __tablename__ = "bank_accounts"
     user_id = Column(BigInteger, primary_key=True, nullable=False)
     checking = Column(Integer, default=10)
     savings = Column(Integer, default=0)

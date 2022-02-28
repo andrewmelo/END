@@ -4,7 +4,7 @@ from rpgtk.exceptions import DiceException
 from sqlalchemy.exc import SQLAlchemyError
 
 from helpers.dice_roller import Bet
-from models.account_model import AccountModel
+from models.bank_account_model import BankAccountModel
 from database.session_handler import transaction
 
 
@@ -24,26 +24,26 @@ class DiceCommands(commands.Cog):
 
     @commands.command(aliases=["bet"])
     async def dicebet(self, ctx, money):
-        account = AccountModel.get_account(ctx.author.id)
-        if account:
-            if account.checking >= int(money) and int(money) != 0:
+        bank_account = BankAccountModel.get_account(ctx.author.id)
+        if bank_account:
+            if bank_account.checking >= int(money) and int(money) != 0:
                 bet = Bet()
-                transaction(account, int(money), "withdraw")
+                transaction(bank_account, int(money), "withdraw")
                 bet.bet(int(money))   
                 if bet.reward > 0:    
-                    transaction(account, bet.reward, "deposit")
+                    transaction(bank_account, bet.reward, "deposit")
                     await ctx.send(
                         f"\nYou rolled: {bet.player_roll}"
                         f"\nThe dealer rolled: {bet.results}"
                         f"\nYour reward: {bet.reward}"
-                        f"\nChecking account: {account.checking}"
+                        f"\nChecking account: {bank_account.checking}"
                     )
                 else:
                     await ctx.send(
                         "Better luck next time!"
                         f"\nYou rolled: {bet.player_roll}"
                         f"\nThe dealer rolled: {bet.results}"
-                        f"\nChecking account: {account.checking}"
+                        f"\nChecking account: {bank_account.checking}"
                     )
             else:
                 await ctx.send("You don't have enough to bet.")

@@ -12,12 +12,11 @@ def save_object(obj):
     session.add(obj)
     session.commit()
 
-def transaction(account, value, operation):
+def transaction(bank_account, value, operation):
     session = get_session()
-    account = account
     if operation == "deposit":
-        account.checking += value
+        bank_account.checking += value
     elif operation == "withdraw":
-        account.checking -= value
-    session.add(account)
+        bank_account.checking -= value
+    session.add(bank_account)
     session.commit()

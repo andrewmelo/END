@@ -1,6 +1,6 @@
 from discord.ext import commands
 
-from models.account_model import AccountModel
+from models.bank_account_model import BankAccountModel
 from database.session_handler import get_object
 
 class MainCog(commands.Cog):
@@ -9,7 +9,7 @@ class MainCog(commands.Cog):
     
     @commands.command(aliases=["ba"])
     async def bankaccount(self, ctx):
-        account = get_object(AccountModel, user_id=ctx.author.id)
+        account = get_object(BankAccountModel, user_id=ctx.author.id)
         if account:
             embed = account.get_info_embed(
                 ctx.author.nick,

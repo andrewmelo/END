@@ -3,7 +3,7 @@ from discord.ext import commands
 
 from constants import PREFIX
 from models.player_model import PlayerModel
-from models.account_model import AccountModel
+from models.bank_account_model import BankAccountModel
 from database.session_handler import save_object
 from helpers.player import get_name
 
@@ -36,8 +36,8 @@ class MainCog(commands.Cog):
         if not player:
             player = PlayerModel(user_id=ctx.author.id)
             save_object(player)
-            account = AccountModel(user_id=player.user_id)
-            save_object(account)
+            bank_account = BankAccountModel(user_id=player.user_id)
+            save_object(bank_account)
             await ctx.send("You got 10 coins for creating your profile! "
                             "Don't spent them all in one place. You should "
                             f"try {PREFIX}bankaccount to check what you can "
