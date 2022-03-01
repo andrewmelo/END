@@ -11,7 +11,6 @@ from database.session_handler import get_object
 class PlayerModel(Base):
     __tablename__ = 'players'
     user_id = Column(BigInteger, primary_key=True, nullable=False, autoincrement=False)
-    currency = Column(Integer, default=0)
     created_at = Column(DateTime, default=datetime.utcnow())
     
     @classmethod

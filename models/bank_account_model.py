@@ -17,6 +17,13 @@ class BankAccountModel(Base):
     is_open = Column(Boolean, default=True)
     last_daily_claim = Column(DateTime, default=None)
 
+    @classmethod
+    def get_account(cls, user_id):
+        try:
+            return get_object(cls, user_id=user_id)
+        except SQLAlchemyError as e:
+            print(e)
+    
     def get_info_embed(self, nick, avatar_url):
         today = datetime.utcnow()
         embed = Embed(title="Accounts", color=0x128a33)
@@ -50,10 +57,3 @@ class BankAccountModel(Base):
                 inline=False
             )
         return embed
-    
-    @classmethod
-    def get_account(cls, user_id):
-        try:
-            return get_object(cls, user_id=user_id)
-        except SQLAlchemyError as e:
-            print(e)
