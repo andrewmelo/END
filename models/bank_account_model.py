@@ -10,7 +10,7 @@ from database.session_handler import get_object
 
 class BankAccountModel(Base):
     __tablename__ = "bank_accounts"
-    user_id = Column(BigInteger, primary_key=True, nullable=False)
+    user_id = Column(BigInteger, primary_key=True, nullable=False, autoincrement=False)
     checking = Column(Integer, default=10)
     savings = Column(Integer, default=0)
     stashed = Column(Integer, default=0)
