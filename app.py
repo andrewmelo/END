@@ -2,6 +2,7 @@ import discord
 import os
 from config import TOKEN
 from discord.ext import commands
+from discord_slash import SlashCommand
 
 from constants import PREFIX
 
@@ -11,6 +12,8 @@ intents.reactions = True
 intents.messages = True
 
 bot = commands.Bot(command_prefix=PREFIX, intents=intents, help_command=None)
+slash = SlashCommand(bot, sync_commands=True)
+
 
 list_of_commands = []
 for roots, dir, files in os.walk("cogs"):
@@ -23,5 +26,6 @@ for n in range(len(list_of_commands)):
 
 for f in list_of_commands:
     bot.load_extension(f[:-3])
+
 
 bot.run(TOKEN)
