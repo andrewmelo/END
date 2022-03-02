@@ -1,7 +1,7 @@
 from discord.ext import commands
 from rpgtk.core import Dice
 from rpgtk.exceptions import DiceException
-from sqlalchemy.exc import SQLAlchemyError
+from discord_slash import cog_ext, SlashContext
 
 from helpers.dice_roller import Bet
 from models.bank_account_model import BankAccountModel
@@ -9,11 +9,14 @@ from database.session_handler import transaction
 
 
 class DiceCommands(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    @commands.command()
-    async def roll(self, ctx, sides):
+    @cog_ext.cog_slash(
+        name="roll",
+        description="Roll a dice with the number of sides informed."
+    )
+    async def roll(self, ctx: SlashContext, sides):
         """Rolls a custom die."""
         try:
             dice = Dice(int(sides))
@@ -22,7 +25,7 @@ class DiceCommands(commands.Cog):
             return
         await ctx.send("Resultado: {result}".format(result=dice.roll()))
 
-    @commands.command(aliases=["bet"])
+    @cog_ext.cog_slash(name="dicebet")
     async def dicebet(self, ctx, money):
         bank_account = BankAccountModel.get_account(ctx.author.id)
         if bank_account:
@@ -50,5 +53,5 @@ class DiceCommands(commands.Cog):
         else:
             await ctx.send("You don't have an account yet.")
 
-def setup(bot):
+def setup(bot: commands.Bot):
     bot.add_cog(DiceCommands(bot))

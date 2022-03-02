@@ -1,5 +1,6 @@
 from discord import Embed
 from discord.ext import commands
+from discord_slash import cog_ext, SlashContext
 
 from constants import PREFIX
 from models.player_model import PlayerModel
@@ -7,12 +8,12 @@ from models.bank_account_model import BankAccountModel
 from database.session_handler import save_object
 from helpers.player import get_name
 
-class MainCog(commands.Cog):
+class ProfileCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.command(aliases=["dp"])
-    async def discordprofile(self, ctx):
+    @cog_ext.cog_slash(name="discordprofile")
+    async def discordprofile(self, ctx: SlashContext):
         """Show discord profile"""
         try:
             embed = Embed(colour=0x7833bd)
@@ -29,8 +30,8 @@ class MainCog(commands.Cog):
             print(e)
             return
     
-    @commands.command(aliases=["p"])
-    async def profile(self, ctx):
+    @cog_ext.cog_slash(name="profile")
+    async def profile(self, ctx: SlashContext):
         """Setup or show player profile"""
         player = PlayerModel.get_player(ctx.author.id)
         if not player:
@@ -50,4 +51,4 @@ class MainCog(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(MainCog(bot))
+    bot.add_cog(ProfileCog(bot))

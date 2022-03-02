@@ -1,16 +1,16 @@
 from discord import Embed
 from discord.ext import commands
+from discord_slash import cog_ext, SlashContext
 
-
-class MainCog(commands.Cog):
+class CharacterCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=["lc"])
-    async def listcharacters(self, ctx):
-        """Show discord profile"""
-        pass
+    @cog_ext.cog_slash(name="listcharacters",)
+    async def listcharacters(self, ctx: SlashContext):
+        """Show list of owned characters."""
+        await ctx.send("List of your characters:")
 
 
 def setup(bot):
-    bot.add_cog(MainCog(bot))
+    bot.add_cog(CharacterCog(bot))
