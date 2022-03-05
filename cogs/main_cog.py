@@ -3,7 +3,6 @@ from discord.ext import commands
 from discord_slash import cog_ext, SlashContext, SlashCommand
 from sqlalchemy import create_engine
 
-from app import bot
 from config import ENGINE_URL
 from database import Base
 
@@ -39,7 +38,7 @@ class MainCog(commands.Cog):
         engine = create_engine(ENGINE_URL)
         Base.metadata.drop_all(engine)
         Base.metadata.create_all(engine)
-        print("Todas as tablelas resetadas.")
+        await ctx.send("Todas as tablelas resetadas.")
 
     @cog_ext.cog_slash(name="help")
     async def help(self, ctx: SlashContext):
