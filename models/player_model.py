@@ -3,7 +3,7 @@ from discord import Embed
 from sqlalchemy import Integer, BigInteger, DateTime, Column
 from sqlalchemy.exc import SQLAlchemyError
 
-from constants import COIN, BAG
+from constants import BAG
 from database import Base
 from database.session_handler import get_object
 
@@ -23,8 +23,7 @@ class PlayerModel(Base):
     def show(self, nick, avatar_url):
         embed = Embed(color=0x7833bd)
         embed.set_author(name=nick, icon_url=avatar_url)
-        embed.add_field(name=COIN, value=self.currency, inline=True)
-        embed.add_field(name=BAG, value="Empty", inline=False)
+        embed.add_field(name=BAG, value="Empty", inline=True)
         return embed
 
     def update():
@@ -32,3 +31,4 @@ class PlayerModel(Base):
 
     def delete():
         pass
+        

@@ -48,12 +48,12 @@ class BankAccountModel(Base):
             embed.add_field(
                 name="Daily Reward",
                 value="Avalilable: $dr",
-                inline=False
+                inline=True
             )
         else:
             embed.add_field(
                 name="Daily Reward",
                 value="Not available yet",
-                inline=False
+                inline=True
             )
         return embed
