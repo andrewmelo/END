@@ -1,22 +1,32 @@
 from database import get_session
+from sqlalchemy.exc import SQLAlchemyError
 
-
-def get_object(model, **kwargs):
-    session = get_session()
-    obj = session.query(model).filter_by(**kwargs).first()
-    session.close()
+def select_from(model, user_id):
+    try:
+        session = get_session()
+        obj = session.query(model).get(user_id)
+        session.close()
+    except SQLAlchemyError as e:
+        print(e)
+        return
     return obj
 
-def save_object(obj):
-    session = get_session()
-    session.add(obj)
-    session.commit()
+def insert_into(obj):
+    try:
+        session = get_session()
+        session.add(obj)
+        session.commit()
+    except SQLAlchemyError as e:
+        print(e)
 
-def transaction(bank_account, value, operation):
-    session = get_session()
-    if operation == "deposit":
-        bank_account.checking += value
-    elif operation == "withdraw":
-        bank_account.checking -= value
-    session.add(bank_account)
-    session.commit()
+def transaction(player, value, operation):
+    try:  
+        session = get_session()
+        if operation == "deposit":
+            player.checking_account += value
+        elif operation == "withdraw":
+            player.checking_account -= value
+        session.add(player)
+        session.commit()
+    except SQLAlchemyError as e:
+        print(e)

@@ -3,4 +3,4 @@ from datetime import timedelta
 COIN = "Coins"
 BAG = "Bag"
 PREFIX = "$"
-DAILY_CLAIM = timedelta(hours=21)
+DAILY_CLAIM = timedelta(hours=20)

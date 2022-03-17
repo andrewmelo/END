@@ -57,3 +57,6 @@ class BankAccountModel(Base):
                 inline=True
             )
         return embed
+
+    def get_daily_reward(self, user_id):
+        pass

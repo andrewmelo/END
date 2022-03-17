@@ -1,6 +1,5 @@
 from copy import deepcopy
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext, SlashCommand
 from sqlalchemy import create_engine
 
 from config import ENGINE_URL
@@ -16,8 +15,8 @@ class MainCog(commands.Cog):
         self.bot
         print("Logged in as {0.user}".format(self.bot))
 
-    @cog_ext.cog_slash(name="setupdb")
-    async def setupdb(self, ctx: SlashContext, *args):
+    @commands.command()
+    async def setupdb(self, ctx, *args):
         engine = create_engine(ENGINE_URL)
         if not args:
             await ctx.send(
@@ -33,19 +32,19 @@ class MainCog(commands.Cog):
             Base.metadata2.create_all(engine)
             print("Tabelas resetadas (salvo as excluidas)")
 
-    @cog_ext.cog_slash(name="setupdball")
-    async def setupdball(self, ctx: SlashContext):
+    @commands.command()
+    async def setupdball(self, ctx):
         engine = create_engine(ENGINE_URL)
         Base.metadata.drop_all(engine)
         Base.metadata.create_all(engine)
         await ctx.send("Todas as tablelas resetadas.")
 
-    @cog_ext.cog_slash(name="help")
-    async def help(self, ctx: SlashContext):
+    @commands.command()
+    async def help(self, ctx):
         await ctx.send("HELP")
 
-    @cog_ext.cog_slash(name="test")
-    async def test(self, ctx: SlashContext):
+    @commands.command()
+    async def test(self, ctx):
         await ctx.send("Teste concluído.")
 
 def setup(bot):

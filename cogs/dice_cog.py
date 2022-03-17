@@ -1,22 +1,17 @@
 from discord.ext import commands
 from rpgtk.core import Dice
 from rpgtk.exceptions import DiceException
-from discord_slash import cog_ext, SlashContext
 
 from helpers.dice_roller import Bet
-from models.bank_account_model import BankAccountModel
 from database.session_handler import transaction
-
+from models.player_model import PlayerModel
 
 class DiceCommands(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    @cog_ext.cog_slash(
-        name="roll",
-        description="Roll a dice with the number of sides informed."
-    )
-    async def roll(self, ctx: SlashContext, sides):
+    @commands.command(aliases=['r'])
+    async def roll(self, ctx, sides):
         """Rolls a custom die."""
         try:
             dice = Dice(int(sides))
@@ -25,28 +20,41 @@ class DiceCommands(commands.Cog):
             return
         await ctx.send("Resultado: {result}".format(result=dice.roll()))
 
-    @cog_ext.cog_slash(name="dicebet")
+    @commands.command()
+    async def d6(self, ctx, qtd):
+        """Rolls a custom die."""
+        try:
+            dice = Dice()
+            result = []
+            for r in range(int(qtd)):
+                result.append(dice.roll())
+        except (DiceException, ValueError):
+            await ctx.send("Valor inválido.")
+            return
+        await ctx.send(f"Resultado: {result}")
+
+    @commands.command(aliases=['bet'])
     async def dicebet(self, ctx, money):
-        bank_account = BankAccountModel.get_account(ctx.author.id)
-        if bank_account:
-            if bank_account.checking >= int(money) and int(money) != 0:
+        player = PlayerModel.get_player(ctx.author.id)
+        if player:
+            if player.checking_account >= int(money) and int(money) != 0:
                 bet = Bet()
-                transaction(bank_account, int(money), "withdraw")
+                transaction(player, int(money), "withdraw")
                 bet.bet(int(money))   
                 if bet.reward > 0:    
-                    transaction(bank_account, bet.reward, "deposit")
+                    transaction(player, bet.reward, "deposit")
                     await ctx.send(
                         f"\nYou rolled: {bet.player_roll}"
                         f"\nThe dealer rolled: {bet.results}"
                         f"\nYour reward: {bet.reward}"
-                        f"\nChecking account: {bank_account.checking}"
+                        f"\nChecking account: {player.checking_account}"
                     )
                 else:
                     await ctx.send(
                         "Better luck next time!"
                         f"\nYou rolled: {bet.player_roll}"
                         f"\nThe dealer rolled: {bet.results}"
-                        f"\nChecking account: {bank_account.checking}"
+                        f"\nChecking account: {player.checking_account}"
                     )
             else:
                 await ctx.send("You don't have enough to bet.")

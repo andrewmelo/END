@@ -2,7 +2,6 @@ import discord
 import os
 from config import TOKEN
 from discord.ext import commands
-from discord_slash import SlashCommand
 
 from constants import PREFIX
 
@@ -12,14 +11,13 @@ intents.reactions = True
 intents.messages = True
 
 bot = commands.Bot(command_prefix=PREFIX, intents=intents, help_command=None)
-slash = SlashCommand(bot, sync_commands=True)
 
 
 list_of_commands = []
 for roots, dir, files in os.walk("cogs"):
-    for arquivo in files:
-        if arquivo.endswith(".py"):
-            list_of_commands.append(os.path.join(roots, arquivo))
+    for f in files:
+        if f.endswith(".py"):
+            list_of_commands.append(os.path.join(roots, f))
 
 for n in range(len(list_of_commands)):
     list_of_commands[n] = list_of_commands[n].replace("/", ".")
