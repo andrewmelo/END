@@ -15,4 +15,4 @@ DB_PSSWD = os.getenv("DB_PSSWD") or "Invalid Pasword."
 DB_HOST = os.getenv("DB_HOST") or "Invalid Host."
 DB_PORT = os.getenv("DB_PORT") or "Invalid Port."
 DB_DATABASE = os.getenv("DB_DATABASE") or "Invalid Database"
-ENGINE_URL = DB_PROTOCOL+"://"+DB_USER+":"+DB_PSSWD+"@"+DB_HOST+":"+DB_PORT+"/"+DB_DATABASE
+ENGINE_URL = os.getenv("ENGINE_URL") or "Invalid URL"
