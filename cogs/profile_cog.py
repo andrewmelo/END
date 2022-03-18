@@ -33,16 +33,15 @@ class ProfileCog(commands.Cog):
             last_reward_time = datetime.utcnow() - player.last_daily_claim
             if (
                 player.last_daily_claim is None
-                or DAILY_CLAIM <= last_reward_time
+                or last_reward_time >= DAILY_CLAIM
             ):                
                 reward = randrange(10, 100)
                 player.last_daily_claim = datetime.utcnow()
                 player.checking_account += reward
-                player.daily_reward = False
                 insert_into(player)
                 await ctx.send(f"You got {reward}")
             else:
-                await ctx.send(f"Daily reward not available yet: {DAILY_CLAIM - last_reward_time}h")
+                await ctx.send(f"Daily reward not available yet: {last_reward_time - DAILY_CLAIM}h")
 
 
 def setup(bot):
