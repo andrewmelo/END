@@ -7,7 +7,6 @@ discord.py==1.7.3
 greenlet==1.1.2
 idna==3.3
 idna-ssl==1.1.0
-mariadb==1.0.10
 multidict==4.7.6
 orjson==3.6.7
 PyMySQL==1.0.2
