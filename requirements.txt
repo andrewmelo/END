@@ -8,8 +8,8 @@ greenlet==1.1.2
 idna==3.3
 idna-ssl==1.1.0
 multidict==4.7.6
+mysqlclient==2.1.0
 orjson==3.6.7
-PyMySQL==1.0.2
 python-dotenv==0.19.2
 rpgtk==0.3.0
 SQLAlchemy==1.4.31
