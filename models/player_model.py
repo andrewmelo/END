@@ -15,7 +15,6 @@ class PlayerModel(Base):
     savings_account = Column(Integer, default=0)
     stashed_cash = Column(Integer, default=0)
     last_daily_claim = Column(DateTime, default=None)
-    daily_reward = Column(Boolean, default="True")
 
     @classmethod
     def get_player(cls, user_id):
