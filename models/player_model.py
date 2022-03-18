@@ -14,7 +14,7 @@ class PlayerModel(Base):
     checking_account = Column(Integer, default=10)
     savings_account = Column(Integer, default=0)
     stashed_cash = Column(Integer, default=0)
-    last_daily_claim = Column(DateTime, default=None)
+    last_daily_claim = Column(DateTime, default=datetime.utcnow())
 
     @classmethod
     def get_player(cls, user_id):
