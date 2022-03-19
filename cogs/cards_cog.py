@@ -16,9 +16,9 @@ class DiceCommands(commands.Cog):
         for card in range(3):
             cards.append(deck.draw())
         await ctx.send(
-            f"\nFirst card: {cards.append[0]}"
-            f"\nSecond card: {cards.append[1]}"
-            f"\nThird card: {cards.append[2]}"
+            f"\nFirst card: {cards[0]}"
+            f"\nSecond card: {cards[1]}"
+            f"\nThird card: {cards[2]}"
             )
 
 
