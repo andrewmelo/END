@@ -2,7 +2,7 @@ import discord
 import os
 from config import TOKEN
 from discord.ext import commands
-
+from discord_components import DiscordComponents
 from constants import PREFIX
 
 intents = discord.Intents.default()
@@ -11,7 +11,7 @@ intents.reactions = True
 intents.messages = True
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(PREFIX), intents=intents, help_command=None)
-
+DiscordComponents(bot)
 
 list_of_commands = []
 for roots, dir, files in os.walk("cogs"):
