@@ -16,6 +16,7 @@ def insert_into(obj):
         session = get_session()
         session.add(obj)
         session.commit()
+        session.close()
     except SQLAlchemyError as e:
         print(e)
 
@@ -28,5 +29,6 @@ def transaction(player, value, operation):
             player.checking_account -= value
         session.add(player)
         session.commit()
+        session.close()
     except SQLAlchemyError as e:
         print(e)
