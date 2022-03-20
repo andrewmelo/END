@@ -21,15 +21,3 @@ def insert_into(obj):
         session.rollback()
         print(e)
 
-def transaction(player, value, operation):
-    try:  
-        session = get_session()
-        if operation == "deposit":
-            player.checking_account += value
-        elif operation == "withdraw":
-            player.checking_account -= value
-        session.add(player)
-        session.commit()
-    except SQLAlchemyError as e:
-        session.rollback()
-        print(e)
