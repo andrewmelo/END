@@ -8,7 +8,7 @@ from config import ENGINE_URL
 Base = declarative_base()
 
 def get_session():
-    session = sessionmaker(my_create_engine(), expire_on_commit=False)
+    session = sessionmaker(my_create_engine())
     return session()
 
 def my_create_engine():

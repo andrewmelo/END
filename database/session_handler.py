@@ -7,8 +7,8 @@ def select_from(model, user_id):
         obj = session.query(model).get(user_id)
         session.close()
     except SQLAlchemyError as e:
+        session.rollback()
         print(e)
-        session.close()
         return
     return obj
 
@@ -17,10 +17,9 @@ def insert_into(obj):
         session = get_session()
         session.add(obj)
         session.commit()
-        session.close()
     except SQLAlchemyError as e:
+        session.rollback()
         print(e)
-        session.close()
 
 def transaction(player, value, operation):
     try:  
@@ -31,7 +30,6 @@ def transaction(player, value, operation):
             player.checking_account -= value
         session.add(player)
         session.commit()
-        session.close()
     except SQLAlchemyError as e:
+        session.rollback()
         print(e)
-        session.close()
