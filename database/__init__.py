@@ -7,9 +7,10 @@ from config import ENGINE_URL
 
 Base = declarative_base()
 
+engine = create_engine(ENGINE_URL, pool_size=5, max_overflow=5)
+
 def get_session():
-    session = sessionmaker(my_create_engine())
+    session = sessionmaker(create_engine)
     return session()
 
-def my_create_engine():
-    return create_engine(ENGINE_URL, pool_size=5, max_overflow=5)
+
