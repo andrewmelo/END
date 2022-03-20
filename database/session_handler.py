@@ -8,6 +8,7 @@ def select_from(model, user_id):
         session.close()
     except SQLAlchemyError as e:
         print(e)
+        session.close()
         return
     return obj
 
@@ -19,6 +20,7 @@ def insert_into(obj):
         session.close()
     except SQLAlchemyError as e:
         print(e)
+        session.close()
 
 def transaction(player, value, operation):
     try:  
@@ -32,3 +34,4 @@ def transaction(player, value, operation):
         session.close()
     except SQLAlchemyError as e:
         print(e)
+        session.close()
