@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 
 temp/
+docker-compose.yml
+config_local.py
