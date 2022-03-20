@@ -44,6 +44,7 @@ class DiceCommands(commands.Cog):
                 bet.bet(int(money))   
                 if bet.reward > 0:
                     player.checking_account += bet.reward
+                    session.add(player)
                     session.commit()
                     await ctx.send(
                         f"\nYou rolled: {bet.player_roll}"
@@ -53,6 +54,7 @@ class DiceCommands(commands.Cog):
                     )
                 else:
                     player.checking_account -= int(money)
+                    session.add(player)
                     session.commit()
                     await ctx.send(
                         "Better luck next time!"
@@ -64,6 +66,7 @@ class DiceCommands(commands.Cog):
                 await ctx.send("You don't have enough to bet.")
         else:
             await ctx.send("You don't have an account yet.")
+        session.close()
         
 
 def setup(bot: commands.Bot):

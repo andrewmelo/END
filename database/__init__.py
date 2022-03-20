@@ -12,5 +12,3 @@ engine = create_engine(ENGINE_URL, pool_size=5, max_overflow=5)
 def get_session():
     session = sessionmaker(engine)
     return session()
-
-
