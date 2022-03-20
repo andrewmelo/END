@@ -1,5 +1,4 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm.session import Session
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -13,4 +12,4 @@ def get_session():
     return session()
 
 def my_create_engine():
-    return create_engine(ENGINE_URL)
+    return create_engine(ENGINE_URL, pool_size=5, max_overflow=5)
