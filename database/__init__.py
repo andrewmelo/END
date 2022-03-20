@@ -10,7 +10,7 @@ Base = declarative_base()
 engine = create_engine(ENGINE_URL, pool_size=5, max_overflow=5)
 
 def get_session():
-    session = sessionmaker(create_engine)
+    session = sessionmaker(engine)
     return session()
 
 
