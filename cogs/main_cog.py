@@ -1,6 +1,7 @@
 from copy import deepcopy
 from discord.ext import commands
 from sqlalchemy import create_engine
+from discord.ext.commands import CommandNotFound
 
 from config import ENGINE_URL
 from database import Base
@@ -14,6 +15,12 @@ class MainCog(commands.Cog):
     async def on_ready(self):
         self.bot
         print("Logged in as {0.user}".format(self.bot))
+
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+        if isinstance(error, CommandNotFound):
+            return
+        raise error;
 
     @commands.command()
     async def setupdb(self, ctx, *args):
