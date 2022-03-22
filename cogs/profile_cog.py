@@ -33,7 +33,7 @@ class ProfileCog(commands.Cog):
                 last_reward_time = datetime.utcnow()- player.last_daily_claim
             else:
                 last_reward_time = DAILY_CLAIM
-            if last_reward_time.total_seconds >= DAILY_CLAIM.total_seconds:                
+            if last_reward_time.total_seconds() >= DAILY_CLAIM.total_seconds():
                 reward = randrange(10, 100)
                 player.last_daily_claim = datetime.utcnow()
                 player.checking_account += reward
