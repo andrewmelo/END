@@ -22,26 +22,30 @@ class ProfileCog(commands.Cog):
             nick=get_name(ctx),
             avatar_url=ctx.author.avatar_url,
             currency=player.checking_account,
-            savings=player.savings_account,
-            daily_reward=player.last_daily_claim
+            savings=player.savings_account
         )
         await ctx.send(embed=embed)
 
     @commands.command(aliases=['dr'])
     async def dailyreward(self, ctx):
             player = PlayerModel.get_player(ctx.author.id)
-            last_reward_time = datetime.utcnow() - player.last_daily_claim
-            if (
-                player.last_daily_claim is None
-                or last_reward_time >= DAILY_CLAIM
-            ):                
+            if player.last_daily_claim is not None:
+                last_reward_time = datetime.utcnow() 
+                - datetime.fromisoformat(player.last_daily_claim)
+            else:
+                last_reward_time = DAILY_CLAIM
+            if last_reward_time.total_seconds >= DAILY_CLAIM.total_seconds:                
                 reward = randrange(10, 100)
                 player.last_daily_claim = datetime.utcnow()
                 player.checking_account += reward
                 insert_into(player)
                 await ctx.send(f"You got {reward}")
+            elif last_reward_time.total_seconds <= 3600:
+                await ctx.send(f"Daily reward not available yet:"
+                f" {last_reward_time.total_seconds/60} minutes")
             else:
-                await ctx.send(f"Daily reward not available yet: {last_reward_time - DAILY_CLAIM}h")
+                await ctx.send(f"Daily reward not available yet:"
+                f" {last_reward_time.total_seconds/60/60} hours")
 
 
 def setup(bot):
