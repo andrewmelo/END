@@ -1,18 +1,21 @@
-from discord.embeds import Embed
 from random import shuffle
 
 from sources.decks import DECKS
 
-
-def three_card_reading(selected_deck):
+def get_three_cards(selected_deck):
     deck = DECKS[selected_deck]
-    shuffle(deck)
-    results = []
-    for card in range(3):
-        results.append(deck[card])
-    embed = Embed()
-    embed.add_field(name='Past', value=results[0], inline=False)
-    embed.add_field(name='Present', value=results[1], inline=False)
-    embed.add_field(name='Future', value=results[2], inline=False)
-    return embed
+    deck_list = []
+    cards = []
+    urls = []
+
+    for key in deck:
+        deck_list.append(key)
     
+    shuffle(deck_list)
+
+    for card in range(3):
+        cards.append(deck_list[card])
+        urls.append(deck[deck_list[card]])
+
+    reading = dict(zip(cards, urls))
+    return reading
