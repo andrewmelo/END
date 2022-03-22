@@ -39,12 +39,12 @@ class ProfileCog(commands.Cog):
                 player.checking_account += reward
                 insert_into(player)
                 await ctx.send(f"You got {reward}")
-            elif last_reward_time.total_seconds <= 3600:
+            elif last_reward_time.total_seconds() <= 3600:
                 await ctx.send(f"Daily reward not available yet:"
-                f" {last_reward_time.total_seconds/60} minutes")
+                f" {last_reward_time.total_seconds()/60} minutes")
             else:
                 await ctx.send(f"Daily reward not available yet:"
-                f" {last_reward_time.total_seconds/60/60} hours")
+                f" {last_reward_time.total_second()/60/60} hours")
 
 
 def setup(bot):
