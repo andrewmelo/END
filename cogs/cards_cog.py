@@ -71,8 +71,6 @@ class DiceCommands(commands.Cog):
                         embed.title = cartas[current_card]
                         embed.set_image(url=urls[current_card])
                         await msg2.edit(embed=embed)
-                    else:
-                        current_card = len(cartas) - 1
                     try:
                         await moderator.respond()
                     except:
@@ -84,8 +82,6 @@ class DiceCommands(commands.Cog):
                         embed.title = cartas[current_card]
                         embed.set_image(url=urls[current_card])
                         await msg2.edit(embed=embed)
-                    else:
-                        current_card = 0
                     try:
                         await moderator.respond()
                     except:
