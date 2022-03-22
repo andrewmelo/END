@@ -30,8 +30,7 @@ class ProfileCog(commands.Cog):
     async def dailyreward(self, ctx):
             player = PlayerModel.get_player(ctx.author.id)
             if player.last_daily_claim is not None:
-                last_reward_time = datetime.utcnow() 
-                - datetime.fromisoformat(player.last_daily_claim)
+                last_reward_time = datetime.utcnow()- player.last_daily_claim
             else:
                 last_reward_time = DAILY_CLAIM
             if last_reward_time.total_seconds >= DAILY_CLAIM.total_seconds:                
