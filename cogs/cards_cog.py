@@ -39,21 +39,24 @@ class DiceCommands(commands.Cog):
     async def threecardreading(self, ctx):
         """Gives you options for card reading"""
         async def callback(interaction):
-            reading = cards.get_three_cards(interaction.values[0])
-            cartas = []
-            urls = []
             current_card = 0
-            for key in reading:
-                cartas.append(key)
-                urls.append(reading[key])
-            embed = Embed(title=cartas[current_card])
-            if urls[current_card] is not None:
-                embed.set_image(url=str(urls[current_card]))
+            reading = cards.get_three_cards(interaction.values[0])
+            cards_list = []
+            for card in range(len(reading.cards)):
+                for key in reading.cards[card].value:
+                    cards_list.append(key)
+            embed = Embed(title=cards_list[current_card])
+            embed.insert_field_at(index=0, name='Upside Down', value=reading.cards[current_card].is_upside_down, inline=False)
+            if reading.cards[current_card].value is not None:
+                embed.set_image(url=str(reading.cards[current_card].value[cards_list[current_card]]))
             
             embed_list = Embed(title=f'Your reading from {interaction.values[0]} deck:')
-            embed_list.add_field(name='First card:', value=cartas[0], inline=True)
-            embed_list.add_field(name='Second card:', value=cartas[1], inline=True)
-            embed_list.add_field(name='Third card:', value=cartas[2], inline=True)
+            embed_list.add_field(name='First card:', value=cards_list[0], inline=True)
+            embed_list.add_field(name='Second card:', value=cards_list[1], inline=True)
+            embed_list.add_field(name='Third card:', value=cards_list[2], inline=True)
+            embed_list.add_field(name='Upside down:', value=reading.cards[0].is_upside_down, inline=True)
+            embed_list.add_field(name='Upside down:', value=reading.cards[1].is_upside_down, inline=True)
+            embed_list.add_field(name='Upside down:', value=reading.cards[2].is_upside_down, inline=True)
 
             botoes = ActionRow([
                 Button(style=ButtonStyle.gray, label='Previous', custom_id='previous'),
@@ -68,8 +71,9 @@ class DiceCommands(commands.Cog):
                 if moderator.component.label == 'Previous':
                     if current_card > 0:
                         current_card -= 1
-                        embed.title = cartas[current_card]
-                        embed.set_image(url=urls[current_card])
+                        embed.title = cards_list[current_card]
+                        embed.set_field_at(0, name='Upside down:', value=reading.cards[current_card].is_upside_down)
+                        embed.set_image(url=str(reading.cards[current_card].value[cards_list[current_card]]))
                         await msg2.edit(embed=embed)
                     try:
                         await moderator.respond()
@@ -77,10 +81,11 @@ class DiceCommands(commands.Cog):
                         pass
 
                 if moderator.component.label == 'Next':
-                    if current_card < len(cartas) - 1:
+                    if current_card < len(cards_list) - 1:
                         current_card += 1
-                        embed.title = cartas[current_card]
-                        embed.set_image(url=urls[current_card])
+                        embed.title = cards_list[current_card]
+                        embed.set_field_at(0, name='Upside down:', value=reading.cards[current_card].is_upside_down)
+                        embed.set_image(url=str(reading.cards[current_card].value[cards_list[current_card]]))
                         await msg2.edit(embed=embed)
                     try:
                         await moderator.respond()
@@ -118,6 +123,7 @@ class DiceCommands(commands.Cog):
                 ),
             ],
         )
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(DiceCommands(bot))

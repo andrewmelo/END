@@ -1,21 +1,24 @@
-from random import shuffle
+from random import choice
+from rpgtk.cards import Card, Deck
 
 from sources.decks import DECKS
 
-def get_three_cards(selected_deck):
-    deck = DECKS[selected_deck]
-    deck_list = []
-    cards = []
-    urls = []
+setattr(Card, 'is_upside_down', 'No')
 
-    for key in deck:
-        deck_list.append(key)
-    
-    shuffle(deck_list)
+def get_three_cards(selected_deck):
+    deck_list = DECKS[selected_deck]
+    card_list = []
+    reading = Deck()
+
+    for key, value in deck_list.items():
+        card_list.append(Card({key: value}))
+
+    deck = Deck(card_list)
+
+    deck.shuffle()
 
     for card in range(3):
-        cards.append(deck_list[card])
-        urls.append(deck[deck_list[card]])
+        reading.pack(deck.draw())
+        reading.cards[card].is_upside_down = choice(['Yes', 'No'])
 
-    reading = dict(zip(cards, urls))
     return reading
