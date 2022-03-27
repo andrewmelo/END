@@ -1,10 +1,10 @@
 from datetime import datetime
 from discord import Embed
-from sqlalchemy import Integer, BigInteger, DateTime, Column, Boolean, String
+from sqlalchemy import Integer, BigInteger, DateTime, Column
 from sqlalchemy.exc import SQLAlchemyError
 
 from database import Base
-from database.session_handler import select_from, insert_into
+from database.session_handler import select_one_from
 
 
 class PlayerModel(Base):
@@ -20,7 +20,7 @@ class PlayerModel(Base):
     @classmethod
     def get_player(cls, user_id):
         try:
-            return select_from(cls, user_id=user_id)
+            return select_one_from(cls, user_id=user_id)
         except SQLAlchemyError as e:
             print(e)
 

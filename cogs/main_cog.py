@@ -20,7 +20,7 @@ class MainCog(commands.Cog):
     async def on_command_error(self, ctx, error):
         if isinstance(error, CommandNotFound):
             return
-        raise error;
+        raise error
 
     @commands.command()
     async def setupdb(self, ctx, *args):
